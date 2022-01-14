@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!-- La siugiente linea es la que nesecito para utilizar el for each segun el video -->
 <!-- si la dejo no funciona el codigo y es en donde me lanza el problema -->
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +17,6 @@
 <c:forEach items="${book_list}">
 	<p>Book: ${item}</p>
 </c:forEach>
-
+hola
 </body>
 </html>
