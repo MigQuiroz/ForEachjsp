@@ -12,6 +12,11 @@ public class Book {
 		this.price = price;		
 	}
 	
+	@Override
+	public String toString() {
+		return "(" + title + ", "+ author + ", " + price + ")";
+	}
+	
 	
 	public String getTitle() {
 		return title;

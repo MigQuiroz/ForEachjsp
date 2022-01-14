@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.miguel.Book;
@@ -25,16 +26,42 @@ public class servletPrincipal extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getPathInfo();
+		if (action.equals("/new")) {
+			addBook(request,response);
+		}
+		else {
+			listBooks(request, response);
+		}
 		
-		request.setAttribute("book_list", bookList);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("jpsPrincipal.jsp");
-		dispatcher.forward(request, response);
 	}
-
+	private void listBooks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("book_list", bookList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jpsPrincipal.jsp");
+		dispatcher.forward(request,response);
+	}
+	private void addBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookForm.jsp");
+		dispatcher.forward(request,response);
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getPathInfo();
+		if (action.equals("/insert")) {
+			insertBook(request,response);
+		}
+	}
+	
+	private  void insertBook(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String title =request.getParameter("booktitle");
+		String author = request.getParameter("bookauthor");
+		String priceString = request.getParameter("bookprice");
+		
+		Book newBook = new Book(title,author, Float.parseFloat(priceString));
+		bookList.add(newBook);
+		
+		response.sendRedirect("list");
+		
 	}
 
 }
